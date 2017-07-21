@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  jewele_no: MyString
+  member_no: MyString
+  name: MyString
+  sex: MyString
+  father_name: MyString
+  gender: MyString
+  loan_date: 2015-12-22
+  gold_description: MyString
+  gold_total: 1
+  gold_cross_weight: 1
+  gold_net_weight: 1
+  total_amount: 1
+  loan_amount: 1
+  status: MyString
+  loan_close_date: 2015-12-22
+  closing_amount: 1
+  address: MyString
+  mobile: 1
+
+two:
+  jewele_no: MyString
+  member_no: MyString
+  name: MyString
+  sex: MyString
+  father_name: MyString
+  gender: MyString
+  loan_date: 2015-12-22
+  gold_description: MyString
+  gold_total: 1
+  gold_cross_weight: 1
+  gold_net_weight: 1
+  total_amount: 1
+  loan_amount: 1
+  status: MyString
+  loan_close_date: 2015-12-22
+  closing_amount: 1
+  address: MyString
+  mobile: 1

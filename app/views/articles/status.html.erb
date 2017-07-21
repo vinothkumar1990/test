@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> </title >
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0" />
+    <link href="/stylesheets/crop.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/resp.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/fonts.css" media="screen" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+    <link href="/stylesheets/ie.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="/javascripts/selectivizr-min.js"></script>
+    <script src="/javascripts/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+ <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+ <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+
+<script>
+$(document).ready(function(){
+      $('#store_loan_date').datepicker({
+    dateFormat: 'yy-mm-dd',
+    changeMonth: true,
+    changeYear: true,
+});
+$('#store_loan_close_date').datepicker({
+    dateFormat: 'yy-mm-dd',
+    changeMonth: true,
+    changeYear: true,
+});
+$('#store_loan_date').datepicker().bind("change", function () {
+    var minValue = $(this).val();
+    minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+    $('#store_loan_close_date').datepicker("option", "minDate", minValue);
+    calculate();
+});
+$('#store_loan_close_date').datepicker().bind("change", function () {
+    var maxValue = $(this).val();
+    maxValue = $.datepicker.parseDate("yy-mm-dd", maxValue);
+    $('#store_loan_date').datepicker("option", "maxDate", maxValue);
+    calculate();
+});
+
+function calculate() {
+    var d1 = $('#store_loan_date').datepicker('getDate');
+    var d2 = $('#store_loan_close_date').datepicker('getDate');
+    var oneDay = 24*60*60*1000;
+    var diff = 0;
+    if (d1 && d2) {
+  
+      diff = Math.round(Math.abs((d2.getTime() - d1.getTime())/(oneDay)));
+    }
+    s=diff/30;
+   
+    $('#store_duration_amount').val(s);
+
+   m1 = $("#store_loan_amount").val();
+m2 = $("#store_duration_amount").val();
+v=m1*1.15/100;
+k=v*m2;
+n=parseInt(m1)+parseInt(k);
+$("#store_total_interest").val(k);
+$("#store_closing_amount").val(n);
+} 
+  });
+</script>
+<div class="print_link_block">
+        <div class="buttons">
+          <a href="javascript:void(o)" class="print">Print this page </a>
+        </div><!--button-->
+      </div><!--print_link_block-->
+
+<style>
+
+
+
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+}
+table, td, th {
+    border: 1px solid black;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+</style>
+
+  </head>
+  <body>
+    
+
+    <div id="wrapper">
+      <div id="wrapper-header">
+        
+        
+      </div><!--wrapper-header-->
+      <div id="wrapper-container">
+        <div class="row">
+          <div class="container">
+            
+          
+          
+          <h1>Listing articles</h1>
+ <div class="print_link_block">
+        <div class="buttons">
+          <a href="javascript:void(o)" class="print">Print this pagev </a>
+        </div><!--button-->
+      </div><!--print_link_block-->
+<table>
+  <tr>
+    <th>Name</th>
+    <th>father_name</th>
+    <th>open_date</th>
+    <th>end_date</th>
+    <th>Amount</th>
+    <th>address</th>
+    <th>status</th>
+    
+  </tr>
+ 
+  <% @articles.each_with_index do |article| %>
+    <tr class="act">
+      <td><%= article.name %></td>
+      <td><%= article.father_name %></td>
+      <td><%= article.open_date.strftime("%d %m %Y") %></td>
+      <td><%= article.end_date.strftime("%d-%m-%Y") %></td>
+      
+        <td><%= article.amount %></td>
+          <td><%= article.address %></td>
+           <td class="test"><%= article.status %></td>
+      
+    </tr>
+  <% end %>
+  <tr >
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <%#= article.open_date.strftime("%d %m %Y") %>
+        <td>Total Amount:<%= @articles.each.collect(&:amount).inject(:+)%></td>
+          <td></td>
+           <td></td>
+      
+    </tr>
+</table>
+
+
+          
+    
+          
+    
+          </div><!--container-->
+        </div><!--row-->
+      </div><!--wrapper container -->
+    
+
+    </div><!--wrapper-->
+    
+  </body>
+</html>

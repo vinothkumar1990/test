@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#vino,#vino1,#vino2,#vino3,#vino4,#vino5#vino6,#vino7 {
+  display: none;
+  color: red;
+}
+
+</style>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+$(document).ready(function(){
+      $("#article_open_date").datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function(selected) {
+            $("#article_end_date").datepicker("option","minDate", selected)
+          }
+      });
+      $("#article_end_date").datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function(selected) {
+             $("#article_open_date").datepicker("option","maxDate", selected)
+          }
+      }); 
+  });
+</script>
+</head>
+<body>
+<h1>Editing article</h1>
+ 
+<%= form_for :book, url: book_path(@book), method: :patch do |f| %>
+ 
+<p>
+    <%= f.label :book_name %><br>
+    <%= f.text_field :book_name %><br>
+    
+   
+  </p>
+ 
+
+   
+  <p>
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount%>
+    
+  </p>
+ 
+    <p>
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone %>
+    
+  </p>
+  
+
+  <p>
+    <%#= f.submit %>
+    <%= f.submit "Update" %>
+
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', books_path %>
+

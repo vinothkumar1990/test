@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, td, th {
+    border: 1px solid black;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+</style>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+$(document).ready(function(){
+      $("#open_date").datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function(selected) {
+            $("#open_dates").datepicker("option","minDate", selected)
+          }
+      });
+      $("#open_dates").datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function(selected) {
+             $("#open_date").datepicker("option","maxDate", selected)
+          }
+      }); 
+  });
+</script>
+</head>
+<body>
+<h1>Listing articles</h1>
+ 
+
+<table>
+  <tr>
+    <th>Book</th>
+    <th>Amount</th>
+    <th>Phone</th>
+  
+    
+  </tr>
+ 
+  <% @books.each_with_index do |book| %>
+    <tr class="act">
+      <td><%= book.book_name %></td>
+      
+     
+      <%#= article.open_date.strftime("%d %m %Y") %>
+        <td><%= book.amount %></td>
+        <td><%= book.phone %></td>
+          
+      <td><%= link_to 'Show', book_path(book) %></td>
+      <td><%= link_to 'Edit', edit_book_path(book) %></td>
+      <td><%= link_to 'Destroy', book_path(book),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  
+</table>
+
+<p> <%#= @articles.each.collect(&:amount).inject(:+)%> </p>
+
+</body>
+</html>

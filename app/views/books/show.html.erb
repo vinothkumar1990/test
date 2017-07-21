@@ -1,0 +1,23 @@
+<h1>Listing articles</h1>
+
+<table>
+  <tr>
+   <th>Book</th>
+    <th>Amount</th>
+    <th>Phone</th>
+    
+    
+  </tr>
+ 
+  <% @books.each_with_index do |book| %>
+    <tr class="act">
+      <td><%= book.name %></td>
+      
+        <td><%= book.amount %></td>
+          <td><%= book.phone %></td>
+     
+      
+    </tr>
+  <% end %>
+</table>
+

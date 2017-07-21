@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, td, th {
+    border: 1px solid black;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+</style>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+$(document).ready(function(){
+      $("#open_date").datepicker({
+          dateFormat: 'yy-mm-dd'
+          
+      });
+       
+  });
+</script>
+</head>
+<body>
+<h1>Date By Date List</h1>
+ <%= form_tag date_path :method => 'get' do%>
+<%= text_field_tag :open_date, params[:open_date]%>
+
+<%= submit_tag "date"%>
+<%end%>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>father_name</th>
+    <th>open_date</th>
+    <th>end_date</th>
+    <th>Amount</th>
+    <th>address</th>
+    <th>status</th>
+    
+  </tr>
+ 
+  <% @articles.each_with_index do |article| %>
+    <tr class="act">
+      <td><%= article.name %></td>
+      <td><%= article.father_name %></td>
+      <td><%= article.open_date.strftime("%d-%m-%Y") %></td>
+      <td><%= article.end_date.strftime("%d-%m-%Y") %></td>
+      <%#= article.open_date.strftime("%d %m %Y") %>
+        <td><%= article.amount %></td>
+          <td><%= article.address %></td>
+           <td><%= article.status %></td>
+      
+    </tr>
+  <% end %>
+  
+</table>
+
+<p> <%#= @articles.each.collect(&:amount).inject(:+)%> </p>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#vino,#vino1,#vino2,#vino3,#vino4,#vino5#vino6,#vino7 {
+  display: none;
+  color: red;
+}
+
+</style>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+$(document).ready(function(){
+      $("#article_open_date").datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function(selected) {
+            $("#article_end_date").datepicker("option","minDate", selected)
+          }
+      });
+      $("#article_end_date").datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function(selected) {
+             $("#article_open_date").datepicker("option","maxDate", selected)
+          }
+      }); 
+  });
+</script>
+</head>
+<body>
+<h1>Editing article</h1>
+ 
+<%= form_for :article, url: article_path(@article), method: :patch do |f| %>
+ 
+<p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %><br>
+    
+    <label id="vino">Enter  name</label>
+  </p>
+ 
+  <p>
+    <%= f.label :father_name %><br>
+    <%= f.text_field :father_name %>
+    <div id="vino1">Enter father name</div>
+  </p>
+   <p>
+    <%= f.label :open_date %><br>
+    <%= f.text_field :open_date %>
+    <div id="vino2">Enter open date</div>
+  </p>
+   <p>
+    <%= f.label :end_date %><br>
+    <%= f.text_field :end_date %>
+    <div id="vino3">Enter end</div>
+  </p>
+  <p>
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount,{:class=>"register_large_textbox new_form",:onkeyup=>"checkphone(this);",:onkeydown=>"phone_no()"} %>
+    <div id="vino4">Enter amount</div>
+    <div id="vino7">Enter number</div>
+  </p>
+ <p>
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
+    <div id="vino5">Enter address</div>
+  </p>
+  <p>
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+    <div id="vino6">Enter status</div>
+  </p>
+
+  <p>
+    <%#= f.submit %>
+    <%= f.submit "Update",{:class=>"search_submit_tab submit_form_c",:onclick=>"return validate_form_new()"} %>
+
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', articles_path %>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script type="text/javascript">
+ $(function() {
+var availableTags = [<%=raw Article.all.collect{|a|'"'+a.name.to_s+'"'}.sort.join(",")%>];
+$( "#article_name" ).autocomplete({
+source: availableTags
+})
+
+}); 
+</script>
+<script type="text/javascript">
+ $(function() {
+var availableTags = [<%=raw Article.all.collect{|a|'"'+a.father_name.to_s+'"'}.sort.join(",")%>];
+$( "#article_father_name" ).autocomplete({
+source: availableTags
+})
+
+}); 
+</script>
+<script type="text/javascript">
+function validate_form_new(){
+var x =jQuery("#article_name").val();
+if (x == null || x == "") {
+$("#vino").show();
+return false;
+}
+else{
+$("#vino").hide();
+}
+var x =jQuery("#article_father_name").val();
+if (x == null || x == "") {
+$("#vino1").show();
+return false;
+}
+else{
+$("#vino1").hide();
+}
+var x =jQuery("#article_open_date").val();
+if (x == null || x == "") {
+$("#vino2").show();
+return false;
+}
+else{
+$("#vino2").hide();
+}
+var x =jQuery("#article_end_date").val();
+if (x == null || x == "") {
+$("#vino3").show();
+return false;
+}
+else{
+$("#vino3").hide();
+}
+var x =jQuery("#article_amount").val();
+if (x == null || x == "") {
+$("#vino4").show();
+return false;
+}
+else{
+$("#vino4").hide();
+}
+var x =jQuery("#article_address").val();
+if (x == null || x == "") {
+$("#vino5").show();
+return false;
+}
+else{
+$("#vino5").hide();
+}
+var x =jQuery("#article_status").val();
+if (x == null || x == "") {
+$("#vino6").show();
+return false;
+}
+else{
+$("#vino6").hide();
+}
+ var getvalue_ph = jQuery("#article_amount").val();
+        var check_int = parseInt(getvalue_ph);
+        if (isNaN(check_int)) {
+            $("#vino7").show();
+            return false;
+        }
+        else {
+            $("#vino7").hide();
+        }
+}
+</script>

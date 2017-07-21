@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, td, th {
+    border: 1px solid black;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+</style>
+</head>
+<body>
+<h1>Listing articles</h1>
+ <%= form_tag search_path :method => 'get' do%>
+<%= text_field_tag :open_date, params[:open_date]%>
+<%= text_field_tag :open_dates, params[:open_dates]%>
+
+<%= submit_tag "search"%>
+<%end%>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>father_name</th>
+    <th>open_date</th>
+    <th>end_date</th>
+    <th>Amount</th>
+    <th>address</th>
+    <th>status</th>
+    
+  </tr>
+ 
+  <% @articles.each_with_index do |article| %>
+    <tr class="act">
+      <td><%= article.name %></td>
+      <td><%= article.father_name %></td>
+      <td><%= article.open_date.strftime("%d-%m-%Y") %></td>
+      <td><%= article.end_date.strftime("%d-%m-%Y") %></td>
+      <%#= article.open_date.strftime("%d %m %Y") %>
+        <td><%= article.amount %></td>
+          <td><%= article.address %></td>
+           <td><%= article.status %></td>
+      
+    </tr>
+    <% end %>
+    <tr >
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <%#= article.open_date.strftime("%d %m %Y") %>
+        <td>Total Amount:<%= @articles.each.collect(&:amount).inject(:+)%></td>
+          <td></td>
+           <td></td>
+      
+    </tr>
+  
+</table>
+
+</body>
+</html>

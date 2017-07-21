@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> </title >
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0" />
+    <link href="/stylesheets/crop.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/resp.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/fonts.css" media="screen" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+    <link href="/stylesheets/ie.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="/javascripts/selectivizr-min.js"></script>
+    <script src="/javascripts/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+ <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+ <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+
+<script>
+$(document).ready(function(){
+      $('#store_loan_date').datepicker({
+    dateFormat: 'yy-mm-dd',
+    changeMonth: true,
+    changeYear: true,
+});
+$('#store_loan_close_date').datepicker({
+    dateFormat: 'yy-mm-dd',
+    changeMonth: true,
+    changeYear: true,
+});
+$('#store_loan_date').datepicker().bind("change", function () {
+    var minValue = $(this).val();
+    minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+    $('#store_loan_close_date').datepicker("option", "minDate", minValue);
+    calculate();
+});
+$('#store_loan_close_date').datepicker().bind("change", function () {
+    var maxValue = $(this).val();
+    maxValue = $.datepicker.parseDate("yy-mm-dd", maxValue);
+    $('#store_loan_date').datepicker("option", "maxDate", maxValue);
+    calculate();
+});
+
+function calculate() {
+    var d1 = $('#store_loan_date').datepicker('getDate');
+    var d2 = $('#store_loan_close_date').datepicker('getDate');
+    var oneDay = 24*60*60*1000;
+    var diff = 0;
+    if (d1 && d2) {
+  
+      diff = Math.round(Math.abs((d2.getTime() - d1.getTime())/(oneDay)));
+    }
+    s=diff/30;
+   
+    $('#store_duration_amount').val(s);
+
+   m1 = $("#store_loan_amount").val();
+m2 = $("#store_duration_amount").val();
+v=m1*1.15/100;
+k=v*m2;
+n=parseInt(m1)+parseInt(k);
+$("#store_total_interest").val(k);
+$("#store_closing_amount").val(n);
+} 
+  });
+</script>
+<div class="print_link_block">
+        <div class="buttons">
+          <a href="javascript:void(o)" class="print">Print this page </a>
+        </div><!--button-->
+      </div><!--print_link_block-->
+
+<style>
+
+
+
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+}
+table, td, th {
+    border: 1px solid black;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+</style>
+
+  </head>
+  <body>
+    
+
+    <div id="wrapper">
+      <div id="wrapper-header">
+        
+        
+      </div><!--wrapper-header-->
+      <div id="wrapper-container">
+        <div class="row">
+          <div class="container">
+            
+          
+          
+          <h1>Member Listing</h1>
+
+<div id="test">
+
+<table>
+ <tr>
+    <th>jewele_no</th>
+    <th>member_no</th>
+    <th>Name</th>
+     <th>Sex</th>
+    <th>Father Name</th>
+    <th>Gender</th>
+    <th>loan_date</th>
+    <th>gold_description</th>
+    <th>gold_total</th>
+     <th>gold_cross_weight</th>
+    <th>gold_net_weight</th>
+    <th>total_amount</th>
+    <th>loan_amount</th>
+    <th>status</th>
+    <th>loan_close_date</th>
+    <th>closing_amount</th>
+  
+    <th>Address</th>
+    <th>Mobile.No</th>
+    
+    <th colspan="3"></th>
+  </tr>
+
+  <% @stores.each do |store| %>
+    <tr>
+      <td><%= store.jewele_no %></td>
+      <td><%= store.member_no %></td>
+      <td><%= store.name %></td>
+      <td><%= store.sex %></td>
+      <td><%= store.father_name %></td>
+      <td><%= store.gender %></td>
+      <td><%= store.loan_date %></td>
+      <td><%= store.gold_description %></td>
+      <td><%= store.gold_total %></td>
+      <td><%= store.gold_cross_weight %></td>
+      <td><%= store.gold_net_weight %></td>
+      <td><%= store.total_amount %></td>
+      <td><%= store.loan_amount %></td>
+       <td><%= store.status %></td>
+      <td><%= store.loan_close_date %></td>
+      <td><%= store.closing_amount %></td>
+      <td><%= store.address %></td>
+      <td><%= store.mobile %></td>
+      
+      <td><%= link_to 'Show', store_path(store) %></td>
+      <td><%= link_to 'Edit', edit_store_path(store) %></td>
+      <td><%= link_to 'Destroy', store_path(store),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Total Amount=<%#= @articles.each.collect(&:member_amount).inject(:+)%></td>
+       <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      
+    </tr>
+</table>
+
+   </div>       
+    
+          
+    
+          </div><!--container-->
+        </div><!--row-->
+      </div><!--wrapper container -->
+    
+
+    </div><!--wrapper-->
+    
+  </body>
+</html>

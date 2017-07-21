@@ -1,0 +1,151 @@
+<%= form_for @article do |f| %>
+<% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        
+      </h2>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :father_name %><br>
+    <%= f.text_field :father_name %>
+  </p>
+   <p>
+    <%= f.label :open_date %><br>
+    <%= f.text_field :open_date %>
+  </p>
+   <p>
+    <%= f.label :end_date %><br>
+    <%= f.text_field :end_date %>
+  </p>
+  <p>
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </p>
+ <p>
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
+  </p>
+  <p>
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </p>
+<div class="export_loading" id="export_loaders2" style="display:none;">
+                                                <img alt="Export Load" class="export_loader_img" src="/images/loading.gif">
+</div>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<div class="res">
+</div>
+
+
+ <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+
+  <script type="text/javascript">
+
+    $(document).on('submit','.new_article',function(){
+    $.ajax({
+          url:'<%=articles_path%>',
+          type:'POST',
+          data:$('.new_article').serialize(),
+          dataType:'html',
+          beforeSend : function(xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', jQuery('meta[name="csrf-token"]').attr('content'));
+                
+                  $( "#export_loaders2" ).show();
+                        
+            },
+          success:function(data) {
+            console.log(data)
+            $(".res").html(data);
+            $( "#export_loaders2" ).hide();
+            // if (data == 'true'){
+            //   alert("test");
+            // }else{
+            //   alert('else')
+            
+            // }
+        }
+      });
+
+});
+
+</script>
+<script type="text/javascript">
+$(function(){
+        $("#new_article").validate({
+            rules: {
+               
+                "article[name]": {
+                    required: true,
+                },
+                "article[father_name]": {
+                    required: true,
+                },
+                "article[open_date]": {
+                    required: true,
+                },
+                "article[end_date]": {
+                    required: true,
+                },
+                "article[amount]": {
+                    required: true,
+                },
+                "article[address]": {
+                    required: true,
+                },
+                 "article[status]": {
+                    required: true,
+                },
+                
+            },
+            
+            messages: {
+                
+                "article[name]": {
+                    required: "Please enter your  name",
+                },
+                "article[father_name]": {
+                    required: "Please enter your  father name",
+                },
+                "article[open_date]": {
+                    required: "Please enter open date",
+                },
+                
+                "article[end_date]": {
+                    required: "Please enter end date",
+                },
+                
+                "article[amount]": {
+                    required: "Please enter amount",
+                },
+                
+                "article[address]": {
+                    required: "Please enter address",
+                },
+                
+                "article[status]": {
+                    required: "Please enter status",
+                },
+                
+                
+            }
+        
+        });
+        
+    });
+</script>

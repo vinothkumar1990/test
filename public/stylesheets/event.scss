@@ -1,0 +1,58 @@
+@import "variables";
+
+/*event-page css*/
+.post-common .publish-date {float: left;width: auto;margin-right:20px;font-family: $heading-font;}
+.publish-date > p, .publish-date span{font-size: 16px;}
+.post-common .category{float:left;width:auto;}
+.event-text .link_button a{float:right;}
+.event-text .link_button{margin-top: 10px;float:left;width:100%;}
+.col-2-1 .common-col2 .list-common-right{width:76%;}
+
+/*events-page css*/
+.common_right_block{margin-bottom:20px;width:100%;float:left;}
+.event-left p {margin-bottom: 10px;}
+.event-left .link_button {float: left;text-align: center;width:100%;margin-bottom:15px;}
+.event-left .link_button:last-child{margin-bottom:0;}
+.event-left .link_button a {width: 90%;}
+.infor_bar .column:last-child{margin-right:0;}
+
+
+/*search-page css*/
+.tab_block {float: left;width: 100%;margin-bottom:10px;}
+.tab_block > ul > li {box-sizing: border-box;float: left;list-style-type: none;text-align: center;width: 50%;}
+.tab_block > ul {border-bottom: 1px solid $fieldset-br-color; float: left;width: 100%;margin:20px 0;}
+.tab_block li a {float: left;padding: 10px;text-align: center;width: 100%;font-size:20px;width:96%;color:$search-input-color;font-family: $heading-font;}
+.tab_block ul li.ui-state-active {background-color:$anchor-color;}
+.tab_block ul li.ui-state-active a{color:$white;}
+.filter_tags {margin-bottom: 12px;}
+.filter_tags ul li{margin-bottom:10px}
+.filter_tags label {font-size: 16px;margin-bottom: 5px;line-height:14px;font-family: $heading-font;}
+
+/*static-page css*/
+.static-form .form_data {width: 100%;}
+.static-form li {float: left;margin-bottom: 10px;width: 100%;}
+.static-form .form_data textarea{width:93%;padding:10px; }
+.static-form .link_button > a {text-align: center;width: 90%;color:$white;background:$hover-color;}
+.static-left .link_button {float: left;margin-top: 10px;width: 100%;}
+.static-left .link_button a{float:right;}
+.static-right {background:$anchor-color; float: left;padding: 20px;}
+
+@media only screen and (max-width:768px) {
+   .static-form .form_data{margin-bottom:0;}
+  .static-form .form_data textarea{width:87%;}
+  .newsletter-form legend{font-size:18px;}
+}
+
+@media only screen and (max-width:599px) {
+  .static-form .form_data textarea{width:94%;}
+
+}
+
+@media only screen and (max-width:499px) {
+  .col-2 .list-common-right {width: 74%;}
+}
+
+@media only screen and (max-width:320px) {
+  .static-form .form_data textarea{width:90%;}
+
+}

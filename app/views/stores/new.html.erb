@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="eng">
+     <head>
+      
+      <meta charset="utf-8">
+    
+
+ <meta charset="utf-8">
+<title>jQuery UI Datepicker - Default functionality</title>
+<style>
+fieldset {
+    font-family: sans-serif;
+    border: 5px solid #1F497D;
+    background: #ddd;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+fieldset legend {
+    background: #1F497D;
+    color: #fff;
+    padding: 5px 10px ;
+    font-size: 32px;
+    border-radius: 5px;
+    box-shadow: 0 0 0 5px #ddd;
+    margin-left: 20px;
+}
+.last_member_no{
+  font-size: 20px;
+  padding-left: 632px;
+color: rgb(5, 64, 5);
+}
+.member h2{
+text-align: center;
+padding-right: 420px;
+color: rgba(39, 41, 187, 1);
+}
+.form{
+  padding-left: 340px;
+  padding-bottom: 10px;
+
+}
+.error{
+color:red;
+}
+.dialog-block{width:1024px;float: left;box-sizing:border-box;padding:0px 20px 0px; position: fixed;left: 50%;background-color: rgb(40, 52, 76);-webkit-box-sizing: border-box;-moz-box-sizing: border-box;display:none;margin-left:-512px;z-index: 999;
+}
+.dialog-block p{line-height: 20px;color: #fff;font-family: "ProximaNova Semibold";font-size: 16px;font-weight: normal}
+.close-dialog{position: absolute;right: 10px;top: 12%;}
+.dialog-block a {color: #fff;text-decoration: none;}
+.dialog-block h3 {background-color: rgb(28, 102, 99);display: inline-block;padding: 5px;color: rgb(237, 217, 12);font-family: "ProximaNova Semibold";margin-bottom: 8px;font-size: 18px;font-weight: normal;}
+.dialog_sub{float:left;width:49%;padding-right:2%;border-right:1px solid #fff;box-sizing:border-box;margin-right:2%; }
+.dialog_sub:last-child{margin-right:0px;border-right:none; }
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button4 {border-radius: 12px;}
+body { background-color:#333; }
+#snow{
+  background: none;
+  font-family: Androgyne;
+  background-image: url('http://www.wearewebstars.dk/codepen/img/s1.png'), url('http://www.wearewebstars.dk/codepen/img//s2.png'), url('http://www.wearewebstars.dk/codepen/img//s3.png');
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index:1;
+  -webkit-animation: snow 10s linear infinite;
+  -moz-animation: snow 10s linear infinite;
+  -ms-animation: snow 10s linear infinite;
+  animation: snow 10s linear infinite;
+}
+@keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}
+@-moz-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 400px 1000px, 200px 400px, 100px 300px;}
+}
+@-webkit-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}
+@-ms-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+} 
+</style>
+
+ 
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+ <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="/home/vinoth/Desktop/jquery.flexslider-min.js" type="text/javascript"></script>
+ <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script type="text/javascript">
+
+    $(document).on('submit','.new_store',function(){
+    $.ajax({
+          url:'<%=stores_path%>',
+          type:'POST',
+          data:$('.new_store').serialize(),
+          dataType:'html',
+          success:function(data) {
+            console.log(data)
+            // if (data == 'true'){
+            //   alert("test");
+            // }else{
+            //   alert('else')
+            
+            // }
+        }
+      });
+
+});
+
+</script>
+ <script type="text/javascript">
+jQuery(document).ready(function () {
+ 
+ jQuery(".close-dialog").click(function(e){
+ e.preventDefault();
+ jQuery(".dialog-block").hide();
+ });
+ });
+</script>
+<script type="text/javascript">
+ jQuery(window).load(function () {
+setTimeout( function(){
+$(".dialog-block").css({"display":"block","bottom":"-50px"}).animate({"bottom":"0px"},1000)
+
+} , 5000);
+
+
+ });
+ </script>
+<script type="text/javascript">
+
+$(function(){
+        $("#new_store").validate({
+            rules: {
+               "store[jewele_no]": {
+                    required: true,
+                },
+                "store[member_no]": {
+                    required: true,
+                },
+                "store[name]": {
+                    required: true,
+                },
+                "store[sex]": {
+                    required: true,
+                },
+                "store[father_name]": {
+                    required: true,
+                },
+                "store[gender]": {
+                    required: true,
+                },
+                "store[loan_date]": {
+                    required: true,
+                },
+                "store[gold_description]": {
+                    required: true,
+                },
+                "store[gold_total]": {
+                    required: true,
+                },
+                 "store[gold_cross_weight]": {
+                    required: true,
+                },
+
+
+
+                "store[gold_net_weight]": {
+                    required: true,
+                },
+                "store[total_amount]": {
+                    required: true,
+                },
+                "store[loan_amount]": {
+                    required: true,
+                },
+                "store[address]": {
+                    required: true,
+                },
+                "store[mobile]": {
+                    required: true,
+                },
+                
+            },
+            
+
+
+            messages: {
+                
+                "store[jewele_no]": {
+                    required: "Please enter Jewele no",
+                },
+                "store[member_no]": {
+                    required: "Please enter member no",
+                },
+                "store[name]": {
+                    required: "Please enter  name",
+                },
+                 "store[sex]": {
+                    required: "Please enter sex  name",
+                },
+                "store[father_name]": {
+                    required: "Please enter   father name",
+                },
+                "store[gender]": {
+                    required: "Please enter gender",
+                },
+                
+                "store[loan_date]": {
+                    required: "Please enter loan_date",
+                },
+                
+                "store[gold_description]": {
+                    required: "Please enter gold_description",
+                },
+                
+                "store[gold_total]": {
+                    required: "Please enter gold_total",
+                },
+                
+                "store[gold_cross_weight]": {
+                    required: "Please enter gold_cross_weight",
+                },
+
+
+
+
+                "store[gold_net_weight]": {
+                    required: "Please enter gold_net_weight",
+                },
+                "store[total_amount]": {
+                    required: "Please enter total_amount",
+                },
+                "store[loan_amount]": {
+                    required: "Please enter loan_amount",
+                },
+                "store[address]": {
+                    required: "Please enter address",
+                },
+                "store[mobile]": {
+                    required: "Please enter mobile",
+                },
+                
+                
+            }
+        
+        });
+        
+    });
+</script>
+
+<script type="text/javascript">
+$(function() {
+$( "#store_loan_date" ).datepicker({
+  dateFormat: 'yy-dd-m'
+});
+});
+</script>
+
+   </head>
+  <body >
+    <div id="snow">
+</div>
+ 
+<%logger.info "============asdfasdf======#{params[:action].inspect}"%>
+<%logger.info "=============fffff#{params[:page_name].inspect}"%>
+<%s=Store.last%>
+
+<div class="last_member_no">Last Jewele.No:<%#=Store.last.jewele_no%>
+<%= link_to s.jewele_no, {}, html_options = { :href => "/stores/#{s.id}" } if s %>
+</div>
+
+
+
+<div class="form">
+<%= form_for 'javascript:void(0)' do |f| %>
+<% if @store.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        
+      </h2>
+      <ul>
+        <% @store.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <fieldset style="min-height:150px;">
+<legend><b> New Jewele Loan </b> </legend>
+<table>
+  
+ 
+  <tr>
+    <td class="lab"><%= f.label :member_no %></td>
+    <td><%= f.text_field :member_no %></td>
+  </tr>
+  <tr>
+    <td class="lab"><%= f.label :name %></td>
+    <td><%= f.text_field :name %></td>
+  </tr>
+<tr>
+    <td class="lab"><%= f.label :avatar %></td>
+    <td><%= f.file_field :avatar %></td>
+  </tr>
+
+
+  
+     
+    
+    <td><%= select_tag("store[sex]", options_for_select([ ['---Select Gender---', ''], ['S/o', 'S/o'], ['W/o', 'W/o'],['D/o', 'D/o']])) %></td>
+    <td><%= f.text_field :father_name %></td>
+  </tr>
+ 
+  <tr>
+   <td class="lab"> <%= f.label :gender %></td>
+    <td><%= select_tag("store[gender]", options_for_select([ ['---Select Gender---', ''], ['Male', 'Male'],['Female', 'Female']])) %></td>
+
+  </tr>
+
+<tr>
+   <td class="lab"> <%= f.label :register_person %></td>
+  <td><%= select "store", "register_person",Store.all.collect{|aa| [aa.name]},:prompt=>"select"%>
+
+  </td>
+</tr>
+  
+  <tr>
+    <td class="lab"><%= f.label :loan_date %></td>
+    <td><%= f.text_field :loan_date %></td>
+  </tr>
+ 
+  <tr>
+    <td class="lab"><%= f.label :gold_description %></td>
+    <td><%= f.text_field :gold_description %></td>
+  </tr>
+  <tr>
+    <td class="lab"><%= f.label :gold_total %></td>
+
+    <td><%= f.text_field :gold_total %></td>
+  </tr>
+  
+  <tr>
+    <td class="lab"><%= f.label :gold_cross_weight %></td>
+
+    <td><%= f.text_field :gold_cross_weight %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :gold_net_weight %></td>
+
+    <td><%= f.text_field :gold_net_weight %></td>
+  </tr>
+   <tr>
+    <td><%= f.label :total_amount %></td>
+
+    <td><%= f.text_field :total_amount %></td>
+  </tr>
+   <tr>
+    <td><%= f.label :loan_amount %></td>
+
+    <td><%= f.text_field :loan_amount %></td>
+  </tr>
+ 
+  <tr>
+    <td><%= f.label :address %></td>
+    <td><%= f.text_area :address %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :mobile %></td>
+    <td><%= f.text_field :mobile %></td>
+  </tr>
+  <tr>
+    <td><%= submit_tag "Create Member",{:class=>"button button4"} %></td>
+
+    <%#= submit_tag "Update",{:class=>"search_button search_button_big"} %>
+  </tr>
+</table>
+</fieldset>
+<% end %>
+
+</div>
+        <div class="flexslider">
+  <div class="dialog-block">
+
+
+  
+  <!-- <div class="section_content component_block" data-url="/edit-component?id=167&amp;type=site" id="component_167">
+
+<div class="dialog_sub">
+<h3>Last Jewele Loan Member.no</h3>
+
+<p>
+<%#=Store.last.member_no%>
+</p>
+
+
+<a href="" class="close-dialog"><img src="/images/close-dialog.png"></a>
+
+</div>
+
+
+<div class="dialog_sub">
+<h3>Last Jewele Loan Name</h3>
+
+<p><%#=Store.last.name%>
+</p>
+<a href="" class="close-dialog"><img src="/images/close-dialog.png"></a>
+
+</div>-->
+
+
+</div>    
+     </body>
+  </html>
+
+
+
+
+
+
+

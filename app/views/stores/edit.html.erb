@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.last_member_no{
+  font-size: 20px;
+  padding-left: 632px;
+color: rgb(5, 64, 5);
+}
+select#store_gender {
+width: 100%;
+}
+select#store_status {
+width: 100%;
+}
+#store_address{
+  width: 97%;
+}
+.member h2{
+text-align: center;
+color: rgba(183, 38, 38, 1);
+}
+.form{
+  padding-left: 340px;
+  padding-bottom: 10px;
+
+}
+#vino,#vino1,#vino2,#vino3,#vino4,#vino5,#vino6,#vino7,#vino8,#vino9,#vino10,#vino11,#vino12,#vino13,#vino14,#vino15,#vino16,#vino17 ,#vino18{
+  display: none;
+  color: rgba(255, 0, 0, 0.71);
+}
+</style>
+ <meta charset="utf-8">
+<title>jQuery UI Datepicker - Default functionality</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+ <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+ <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+ <script type="text/javascript">
+
+    $(document).on('submit','.new_store',function(){
+    $.ajax({
+          url:'stores',
+          type:'POST',
+          data:$('.new_store').serialize(),
+          dataType:'html',
+          success:function(data) {
+            console.log(data)
+            if (data == 'true'){
+              window.location.href =  "/newsletter-thanks?email=" + email
+            }else{
+              alert('else')
+            $('#newsletter-head').html(data)
+            showRecaptcha();
+            }
+        }
+      });
+}
+});
+
+</script>
+<script>
+$(document).ready(function(){
+      $('#store_loan_date').datepicker({
+    dateFormat: 'yy-mm-dd',
+    changeMonth: true,
+    changeYear: true,
+});
+$('#store_loan_close_date').datepicker({
+    dateFormat: 'yy-mm-dd',
+    changeMonth: true,
+    changeYear: true,
+});
+$('#store_loan_date').datepicker().bind("change", function () {
+    var minValue = $(this).val();
+    minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+    $('#store_loan_close_date').datepicker("option", "minDate", minValue);
+    calculate();
+});
+$('#store_loan_close_date').datepicker().bind("change", function () {
+    var maxValue = $(this).val();
+    maxValue = $.datepicker.parseDate("yy-mm-dd", maxValue);
+    $('#store_loan_date').datepicker("option", "maxDate", maxValue);
+    calculate();
+});
+
+function calculate() {
+    var d1 = $('#store_loan_date').datepicker('getDate');
+    var d2 = $('#store_loan_close_date').datepicker('getDate');
+    var oneDay = 24*60*60*1000;
+    var diff = 0;
+    if (d1 && d2) {
+  
+      diff = Math.round(Math.abs((d2.getTime() - d1.getTime())/(oneDay)));
+    }
+    s=diff/30;
+   
+    $('#store_duration_amount').val(s);
+
+   m1 = $("#store_loan_amount").val();
+m2 = $("#store_duration_amount").val();
+v=m1*1.15/100;
+k=v*m2;
+n=parseInt(m1)+parseInt(k);
+$("#store_total_interest").val(k);
+$("#store_closing_amount").val(n);
+} 
+  });
+</script>
+
+</head>
+<div class="last_member_no">Last Jewele.No:<%=Store.last.jewele_no%></div>
+<div class="member"><h2>Member Update</h2></div>
+ <div class="form">
+<%= form_for :store, url: store_path(@store), method: :patch do |f| %>
+ 
+ 
+  <table>
+  <tr>
+    <td><%= f.label :jewele_no %></td>
+    <td><%= f.text_field :jewele_no %></td>
+    <td id="vino">Enter Jewele no</td>
+  </tr>
+ 
+  <tr>
+    <td><%= f.label :member_no %></td>
+    <td><%= f.text_field :member_no %></td>
+    <td id="vino1">Enter member no</td>
+  </tr>
+
+
+    
+  <tr>
+    <td><%= f.label :name %></td>
+    <td><%= f.text_field :name %></td>
+    <td id="vino2">Enter Name</td>
+  </tr>
+  <tr>
+     
+    
+    <td><%= select_tag("store[sex]", options_for_select([ ['---Select Gender---', ''], ['S/o', 'S/o'], ['W/o', 'W/o'],['D/o', 'D/o']], @store.sex)) %></td>
+    <td><%= f.text_field :father_name %></td>
+    <td id="vino3">Enter sex </td>
+    <td id="vino4">Enter father_name </td>
+  </tr>
+ 
+  <tr>
+   <td> <%= f.label :gender %></td>
+    <td><%= select_tag("store[gender]", options_for_select([ ['---Select Gender---', ''], ['Male', 'Male'],['Female', 'Female']], @store.gender)) %></td>
+    <td id="vino5">Enter genter</td>
+  </tr>
+  <tr>
+   <td class="lab"> <%= f.label :register_person %></td>
+  <td><%= select "store", "register_person",Store.all.collect{|aa| [aa.name]},:prompt=>"select"%>
+
+  </td>
+</tr>
+  <tr>
+    <td><%= f.label :loan_date %></td>
+    <td><%= f.text_field :loan_date %></td>
+    <td id="vino6">Enter loan date</td>
+  </tr>
+ 
+  <tr>
+    <td><%= f.label :gold_description %></td>
+    <td><%= f.text_field :gold_description %></td>
+    <td id="vino7">Enter gold description</td>
+  </tr>
+  <tr>
+    <td><%= f.label :gold_total %></td>
+
+    <td><%= f.text_field :gold_total %></td>
+    <td id="vino8">Enter gold total</td>
+  </tr>
+  
+  <tr>
+    <td><%= f.label :gold_cross_weight %></td>
+
+    <td><%= f.text_field :gold_cross_weight %></td>
+    <td id="vino9">Enter gold cross weight</td>
+  </tr>
+  
+  <tr>
+    <td><%= f.label :gold_net_weight %></td>
+
+    <td><%= f.text_field :gold_net_weight %></td>
+    <td id="vino10">Enter gold net weight</td>
+  </tr>
+   <tr>
+    <td><%= f.label :total_amount %></td>
+
+    <td><%= f.text_field :total_amount %></td>
+    <td id="vino11">Enter total amount</td>
+  </tr>
+   <tr>
+    <td><%= f.label :loan_amount %></td>
+
+    <td><%= f.text_field :loan_amount %></td>
+    <td id="vino12">Enter loan amount</td>
+  </tr>
+  <tr>
+   <td> <%= f.label :status %></td>
+    <td><%= select_tag("store[status]", options_for_select([  ['Pending', 'Pending'],['Complete', 'Complete']], @store.status)) %></td>
+
+  </tr>
+  <tr class="close_date">
+    <td><%= f.label :loan_close_date %></td>
+    <td><%= f.text_field :loan_close_date %></td>
+    <td id="vino13">Enter Loan Close Date</td>
+  </tr>
+  <tr class="duration_amount">
+    <td><%= f.label :duration_amount %></td>
+    <td><%= f.text_field :duration_amount%></td>
+    <td id="vino18">Enter Duration Month</td>
+  </tr>
+  <tr class="total_interest">
+    <td><%= f.label :total_interest %></td>
+    <td><%= f.text_field :total_interest%></td>
+    
+  </tr>
+  <tr class="closed_person">
+     <td class="lab"> <%= f.label :closed_person %></td>
+  <td><%= select "store", "closed_person",Store.all.collect{|aa| [aa.name]}%>
+
+  </td>
+</tr>
+  <tr class="close_amount">
+    <td><%= f.label :closing_amount %></td>
+    <td><%= f.text_field :closing_amount %></td>
+    <td id="vino14">Enter Loan Close Amount</td>
+  </tr>
+  <tr>
+    <td><%= f.label :address %></td>
+    <td><%= f.text_area :address %></td>
+    <td id="vino15">Enter address</td>
+  </tr>
+  <tr>
+    <td><%= f.label :mobile %></td>
+    <td><%= f.text_field :mobile %></td>
+    <td id="vino16">Enter mobile</td>
+  </tr>
+  <tr>
+ 
+    <td><%= f.submit "Update",{:class=>"search_submit_tab submit_form_c",:onclick=>"return validate_form_new()"} %></td>
+  </tr>
+ </table>
+<% end %>
+ </div>
+<%= link_to 'Back', articles_path %>
+
+
+</body>
+</html>
+<script type="text/javascript">
+
+
+  var x =jQuery("#store_status").val();
+ if (x == "Pending") {
+$(".close_date").hide();
+
+$(".close_amount").hide();
+$(".interest_rate").hide();
+$(".duration_amount").hide();
+$(".total_interest").hide();
+$(".closed_person").hide();
+}
+
+
+
+</script>
+
+
+<script type="text/javascript">
+
+$("#store_status").change(function(){
+  var x =jQuery("#store_status").val();
+ if (x == "Pending") {
+$(".close_date").hide();
+
+$(".close_amount").hide();
+$(".interest_rate").hide();
+$(".duration_amount").hide();
+$(".total_interest").hide();
+$(".closed_person").hide();
+}
+
+else{
+$(".close_date").show();
+
+$(".close_amount").show();
+$(".interest_rate").show();
+$(".duration_amount").show();
+$(".total_interest").show();;
+$(".closed_person").show();
+}
+
+});
+</script>
+
+<script type="text/javascript">
+function validate_form_new(){
+
+  if(jQuery(".close_date").css('display') == 'none')
+{
+  
+
+}
+  else{
+  var x =jQuery("#store_loan_close_date").val();
+ if (x == null || x == "") {
+
+$("#vino13").show();
+return false;
+}
+else{
+$("#vino13").hide();
+}
+  }
+
+  if(jQuery(".close_amount").css('display') == 'none')
+{
+  
+
+}
+  else{
+  var x =jQuery("#store_closing_amount").val();
+ if (x == null || x == "") {
+
+$("#vino14").show();
+return false;
+}
+else{
+$("#vino14").hide();
+}
+  }
+
+
+
+
+
+     if(jQuery(".duration_amount").css('display') == 'none')
+{
+  
+
+}
+  else{
+  var x =jQuery("#store_duration_amount").val();
+ if (x == null || x == "") {
+
+$("#vino18").show();
+return false;
+}
+else{
+$("#vino18").hide();
+}
+  }
+
+
+
+
+var x =jQuery("#store_jewele_no").val();
+if (x == null || x == "") {
+$("#vino").show();
+return false;
+}
+else{
+$("#vino").hide();
+}
+var x =jQuery("#store_member_no").val();
+if (x == null || x == "") {
+$("#vino1").show();
+return false;
+}
+else{
+$("#vino1").hide();
+}
+var x =jQuery("#store_name").val();
+if (x == null || x == "") {
+$("#vino2").show();
+return false;
+}
+else{
+$("#vino2").hide();
+}
+var x =jQuery("#store_sex").val();
+ if (x == null || x == "" || x == "---Select Gender---") {
+
+$("#vino3").show();
+return false;
+}
+else{
+$("#vino3").hide();
+}
+var x =jQuery("#store_father_name").val();
+ if (x == null || x == "") {
+
+$("#vino4").show();
+return false;
+}
+else{
+$("#vino4").hide();
+}
+var x =jQuery("#store_gender").val();
+ if (x == null || x == "" || x == "---Select Gender---") {
+
+$("#vino5").show();
+return false;
+}
+else{
+$("#vino5").hide();
+}
+var x =jQuery("#store_loan_date").val();
+ if (x == null || x == "") {
+
+$("#vino6").show();
+return false;
+}
+else{
+$("#vino6").hide();
+}
+var x =jQuery("#store_gold_description").val();
+ if (x == null || x == "") {
+
+$("#vino7").show();
+return false;
+}
+else{
+$("#vino7").hide();
+}
+var x =jQuery("#store_gold_total").val();
+ if (x == null || x == "") {
+
+$("#vino8").show();
+return false;
+}
+else{
+$("#vino8").hide();
+}
+var x =jQuery("#store_gold_cross_weight").val();
+ if (x == null || x == "") {
+
+$("#vino9").show();
+return false;
+}
+else{
+$("#vino9").hide();
+}
+var x =jQuery("#store_gold_net_weight").val();
+ if (x == null || x == "") {
+
+$("#vino10").show();
+return false;
+}
+else{
+$("#vino10").hide();
+}
+var x =jQuery("#store_total_amount").val();
+ if (x == null || x == "") {
+
+$("#vino11").show();
+return false;
+}
+else{
+$("#vino11").hide();
+}
+var x =jQuery("#store_loan_amount").val();
+ if (x == null || x == "") {
+
+$("#vino12").show();
+return false;
+}
+else{
+$("#vino12").hide();
+}
+
+
+var x =jQuery("#store_address").val();
+ if (x == null || x == "") {
+
+$("#vino15").show();
+return false;
+}
+else{
+$("#vino15").hide();
+}
+var x =jQuery("#store_mobile").val();
+ if (x == null || x == "") {
+
+$("#vino16").show();
+return false;
+}
+else{
+$("#vino16").hide();
+}
+
+}
+</script>
+
+
+
+
